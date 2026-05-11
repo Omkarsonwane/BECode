@@ -1,0 +1,89 @@
+```cpp
+#include <stdio.h>
+
+__global__ void vectorAdd(int *a, int *b, int *c)
+{
+    int id = threadIdx.x;
+    c[id] = a[id] + b[id];
+}
+
+__global__ void matrixMul(int *A, int *B, int *C)
+{
+    int row = threadIdx.y;
+    int col = threadIdx.x;
+
+    int sum = 0;
+
+    for(int k = 0; k < 2; k++)
+    {
+        sum += A[row * 2 + k] * B[k * 2 + col];
+    }
+
+    C[row * 2 + col] = sum;
+}
+
+int main()
+{
+
+    int a[5] = {1,2,3,4,5};
+    int b[5] = {5,4,3,2,1};
+    int c[5];
+
+    int *d_a, *d_b, *d_c;
+
+    cudaMalloc((void**)&d_a, 5 * sizeof(int));
+    cudaMalloc((void**)&d_b, 5 * sizeof(int));
+    cudaMalloc((void**)&d_c, 5 * sizeof(int));
+
+    cudaMemcpy(d_a, a, 5 * sizeof(int), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_b, b, 5 * sizeof(int), cudaMemcpyHostToDevice);
+
+    vectorAdd<<<1,5>>>(d_a, d_b, d_c);
+
+    cudaMemcpy(c, d_c, 5 * sizeof(int), cudaMemcpyDeviceToHost);
+
+    printf("Vector Addition Result:\n");
+
+    for(int i = 0; i < 5; i++)
+    {
+        printf("%d ", c[i]);
+    }
+
+    printf("\n\n");
+
+    int A[4] = {1,2,3,4};
+    int B[4] = {5,6,7,8};
+    int C[4];
+
+    int *d_A, *d_B, *d_C;
+
+    cudaMalloc((void**)&d_A, 4 * sizeof(int));
+    cudaMalloc((void**)&d_B, 4 * sizeof(int));
+    cudaMalloc((void**)&d_C, 4 * sizeof(int));
+
+    cudaMemcpy(d_A, A, 4 * sizeof(int), cudaMemcpyHostToDevice);
+    cudaMemcpy(d_B, B, 4 * sizeof(int), cudaMemcpyHostToDevice);
+
+    dim3 threads(2,2);
+
+    matrixMul<<<1, threads>>>(d_A, d_B, d_C);
+
+    cudaMemcpy(C, d_C, 4 * sizeof(int), cudaMemcpyDeviceToHost);
+
+    printf("Matrix Multiplication Result:\n");
+
+    for(int i = 0; i < 4; i++)
+    {
+        printf("%d ", C[i]);
+    }
+
+    printf("\n");
+
+    return 0;
+}
+```
+```bash
+nvcc test.cu -o test
+./test
+```
+
