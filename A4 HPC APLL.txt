@@ -1,0 +1,41 @@
+from sklearn.datasets import make_regression
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from concurrent.futures import ThreadPoolExecutor
+import time
+
+# Generate dataset
+X, y = make_regression(
+    n_samples=1000,
+    n_features=5,
+    noise=10,
+    random_state=42
+)
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,
+    random_state=42
+)
+
+# Machine Learning model
+model = LinearRegression()
+
+# Training function
+def train_model():
+    model.fit(X_train, y_train)
+    return model.score(X_test, y_test)
+
+start = time.time()
+
+# Parallel execution
+with ThreadPoolExecutor() as executor:
+    future = executor.submit(train_model)
+    accuracy = future.result()
+
+end = time.time()
+
+print("Model Accuracy:", accuracy)
+
+print("Execution Time:", end - start)

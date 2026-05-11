@@ -1,0 +1,50 @@
+"""
+STEP-BY-STEP EXPLANATION OF RNN STOCK PRICE PREDICTION CODE
+
+1. Import Libraries:
+We import NumPy and Pandas for data handling, TensorFlow (Keras) for building the RNN model,
+and MinMaxScaler for normalizing data.
+
+2. Create Dataset:
+A simple stock price dataset is created manually and stored in a DataFrame.
+Each value represents stock price on different days.
+
+3. Normalize Data:
+MinMaxScaler scales all values between 0 and 1 so that the model can learn efficiently.
+
+4. Prepare Time-Series Data:
+We create input-output pairs using a sliding window approach:
+- Input (X): previous 3 stock prices
+- Output (y): next stock price
+
+This helps the model learn patterns over time.
+
+5. Convert to Arrays:
+X and y are converted into NumPy arrays for model processing.
+
+6. Reshape Data:
+Data is reshaped into 3D format (samples, timesteps, features)
+because RNN requires sequential input structure.
+
+7. Build RNN Model:
+A Sequential model is created with:
+- SimpleRNN layer (50 units) to capture time dependencies
+- Dense layer (1 unit) for final prediction
+
+8. Compile Model:
+Model uses:
+- Adam optimizer for efficient learning
+- Mean Squared Error loss function for regression
+
+9. Train Model:
+Model is trained for 100 epochs to learn stock price patterns.
+
+10. Prediction:
+Model predicts stock prices based on learned patterns.
+
+11. Inverse Transform:
+Predicted values are converted back to original scale.
+
+12. Output:
+Final predicted stock prices are printed.
+"""

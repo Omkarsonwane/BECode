@@ -1,0 +1,73 @@
+from queue import Queue
+from concurrent.futures import ThreadPoolExecutor
+
+graph = {
+    0: [1, 2],
+    1: [0, 3],
+    2: [0, 4],
+    3: [1],
+    4: [2]
+}
+
+visited = set()
+
+def process_node(node):
+    print(node, end=" ")
+
+def parallel_bfs(start):
+
+    q = Queue()
+
+    q.put(start)
+    visited.add(start)
+
+    print("BFS Traversal:")
+
+    while not q.empty():
+
+        node = q.get()
+
+        process_node(node)
+
+        with ThreadPoolExecutor() as executor:
+
+            for neighbor in graph[node]:
+
+                if neighbor not in visited:
+
+                    visited.add(neighbor)
+                    q.put(neighbor)
+
+                    executor.submit(process_node, neighbor)
+
+parallel_bfs(0)
+
+
+#DFS
+
+from concurrent.futures import ThreadPoolExecutor
+
+graph = {
+    0: [1, 2],
+    1: [0, 3],
+    2: [0, 4],
+    3: [1],
+    4: [2]
+}
+
+visited = set()
+
+def parallel_dfs(node):
+
+    if node not in visited:
+
+        print(node, end=" ")
+
+        visited.add(node)
+
+        with ThreadPoolExecutor() as executor:
+
+            executor.map(parallel_dfs, graph[node])
+
+print("DFS Traversal:")
+parallel_dfs(0)

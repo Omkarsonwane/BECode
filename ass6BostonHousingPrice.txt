@@ -1,0 +1,54 @@
+import numpy as np
+import pandas as pd
+
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.datasets import fetch_california_housing
+
+# Load dataset automatically
+housing = fetch_california_housing()
+
+data = pd.DataFrame(housing.data, columns=housing.feature_names)
+data['Price'] = housing.target
+
+print(data.head())
+
+# Split features and target
+X = data.iloc[:, :-1]
+y = data.iloc[:, -1]
+
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,
+    random_state=42
+)
+
+# Feature scaling
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Build model
+model = Sequential()
+model.add(Dense(64, activation='relu', input_shape=(X_train.shape[1],)))
+model.add(Dense(32, activation='relu'))
+model.add(Dense(1))
+
+# Compile model
+model.compile(optimizer='adam', loss='mse', metrics=['mae'])
+
+# Train model
+model.fit(X_train, y_train, epochs=50, batch_size=16, verbose=1)
+
+# Evaluate model
+loss, mae = model.evaluate(X_test, y_test)
+print("Mean Absolute Error:", mae)
+
+# Predict
+predictions = model.predict(X_test)
+print("Predicted Prices:")
+print(predictions[:5])

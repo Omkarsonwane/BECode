@@ -1,0 +1,41 @@
+from concurrent.futures import ThreadPoolExecutor
+import time
+
+arr = [10, 20, 30, 40, 50, 60, 70, 80]
+
+def find_sum(data):
+    return sum(data)
+
+def find_min(data):
+    return min(data)
+
+def find_max(data):
+    return max(data)
+
+def find_avg(data):
+    return sum(data) / len(data)
+
+start = time.time()
+
+with ThreadPoolExecutor() as executor:
+
+    future_sum = executor.submit(find_sum, arr)
+    future_min = executor.submit(find_min, arr)
+    future_max = executor.submit(find_max, arr)
+    future_avg = executor.submit(find_avg, arr)
+
+    total_sum = future_sum.result()
+    minimum = future_min.result()
+    maximum = future_max.result()
+    average = future_avg.result()
+
+end = time.time()
+
+print("Array:", arr)
+
+print("Sum =", total_sum)
+print("Minimum =", minimum)
+print("Maximum =", maximum)
+print("Average =", average)
+
+print("Execution Time:", end - start)

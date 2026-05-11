@@ -1,0 +1,41 @@
+"""
+EXPLANATION OF FASHION MNIST ANN CODE (SINGLE CELL)
+
+1. Import Libraries:
+We import TensorFlow and required modules from keras like Sequential, Dense, and Flatten to build a neural network model.
+
+2. Load Dataset:
+Fashion MNIST dataset is loaded, which contains 70,000 grayscale images (28x28) of clothing items.
+It is split into training (60,000) and testing (10,000) data.
+
+3. Normalize Data:
+Pixel values are originally between 0 to 255. We divide by 255 to scale them between 0 and 1,
+which helps the model learn faster and improves performance.
+
+4. Model Creation:
+We create a Sequential model, which means layers are added one after another.
+
+5. Flatten Layer:
+Converts each 28x28 image into a 1D array of 784 values so it can be processed by Dense layers.
+
+6. Hidden Dense Layer:
+A fully connected layer with 128 neurons using ReLU activation function to learn patterns from data.
+
+7. Output Layer:
+A Dense layer with 10 neurons (for 10 classes) using Softmax activation,
+which gives probability distribution over all clothing categories.
+
+8. Compile Model:
+We use Adam optimizer for efficient learning,
+Sparse Categorical Crossentropy as loss function for multi-class classification,
+and accuracy as evaluation metric.
+
+9. Train Model:
+The model is trained on training data for 5 epochs (5 complete passes over dataset).
+
+10. Evaluate Model:
+The trained model is tested on unseen test data to calculate loss and accuracy.
+
+11. Output:
+Finally, test accuracy is printed, which shows how well the model performs on new data.
+"""

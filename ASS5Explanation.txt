@@ -1,0 +1,46 @@
+"""
+Definition of the Problem:
+The program aims to solve a regression problem by building a Machine Learning
+model that learns the relationship between input features (X) and output values (y).
+It uses Linear Regression to find the best-fit line (y = mX + c) that minimizes
+prediction error. The model is trained on sample data and then tested to check how
+accurately it can predict unseen data. Additionally, the program demonstrates basic
+parallel execution by running the training process in a separate thread, showing how
+ML tasks can be executed efficiently using parallel programming concepts.
+
+Program Explanation:
+
+1. Dataset Creation:
+   - make_regression() generates artificial data with input features (X)
+     and output values (y).
+   - This simulates a real-world regression problem.
+
+2. Data Splitting:
+   - train_test_split() divides data into:
+       • Training data → used to train the model
+       • Testing data → used to evaluate performance
+
+3. Model:
+   - LinearRegression is used to learn the relationship:
+       y = mX + c
+
+4. Training Function:
+   - train_model() trains the model using training data
+   - It returns accuracy (R² score) on test data
+
+5. Parallel Execution:
+   - ThreadPoolExecutor is used to run training in a separate thread
+   - executor.submit() starts the training task
+   - future.result() retrieves the result after execution
+
+6. Time Measurement:
+   - time module is used to calculate execution time of the program
+
+7. Output:
+   - Displays model accuracy
+   - Displays total execution time
+
+Conclusion:
+This program demonstrates how a Machine Learning model is trained,
+evaluated, and executed using basic parallel programming concepts.
+"""

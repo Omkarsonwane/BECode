@@ -1,0 +1,80 @@
+### 📊 Linear Regression using Deep Neural Network (Boston Housing)
+
+**🔹 Step 1: Import Libraries**
+We import libraries like NumPy and Pandas for data handling, Scikit-learn for preprocessing, and TensorFlow/Keras to build the neural network model.
+
+---
+
+**🔹 Step 2: Load Dataset**
+The dataset (`housing.csv`) contains different features of houses (like rooms, area, crime rate, etc.) and their prices.
+We load it into a dataframe so we can process it easily.
+
+---
+
+**🔹 Step 3: Split Features (X) and Target (y)**
+
+* `X` → Independent variables (input features like size, location)
+* `y` → Dependent variable (house price we want to predict)
+  This step defines what we give as input and what we expect as output.
+
+---
+
+**🔹 Step 4: Train-Test Split**
+We divide data into:
+
+* Training data (80%) → used to train the model
+* Testing data (20%) → used to check performance
+  This ensures the model works well on unseen data (avoids overfitting).
+
+---
+
+**🔹 Step 5: Feature Scaling**
+Different features have different ranges (e.g., 0–1 vs 0–1000).
+We normalize them using `StandardScaler` so all features are on the same scale.
+This helps the neural network learn faster and more accurately.
+
+---
+
+**🔹 Step 6: Build Deep Neural Network**
+We create a model using `Sequential`:
+
+* First layer: 64 neurons → learns basic patterns
+* Second layer: 32 neurons → learns deeper relationships
+* Output layer: 1 neuron → gives predicted price
+
+ReLU activation is used in hidden layers to introduce non-linearity.
+
+---
+
+**🔹 Step 7: Compile Model**
+
+* Optimizer (`adam`) → updates weights to reduce error
+* Loss function (`mse`) → calculates difference between actual and predicted values
+* Metric (`mae`) → gives average prediction error (easy to understand)
+
+---
+
+**🔹 Step 8: Train Model**
+The model learns from training data:
+
+* `epochs=50` → model sees data 50 times
+* `batch_size=16` → processes 16 samples at once
+  During training, weights are adjusted to minimize error.
+
+---
+
+**🔹 Step 9: Evaluate Model**
+We test the model using unseen data (test set).
+MAE tells how much prediction is off on average (e.g., ±2 price units).
+
+---
+
+**🔹 Step 10: Predict Values**
+Model predicts house prices for new data.
+We compare predicted values with actual values to check accuracy.
+
+---
+
+### 🎯 Final Concept
+
+Even though this is a **Linear Regression problem**, we use a **Deep Neural Network** to learn both simple and complex relationships between features and house prices.

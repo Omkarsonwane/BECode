@@ -1,0 +1,121 @@
+from sklearn.datasets import make_regression
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from concurrent.futures import ThreadPoolExecutor
+import time
+
+# Generate dataset
+X, y = make_regression(
+    n_samples=1000,
+    n_features=5,
+    noise=10,
+    random_state=42
+)
+
+# Split dataset
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,
+    random_state=42
+)
+
+# Machine Learning model
+model = LinearRegression()
+
+# Training function
+def train_model():
+    model.fit(X_train, y_train)
+    return model.score(X_test, y_test)
+
+start = time.time()
+
+# Parallel execution
+with ThreadPoolExecutor() as executor:
+    future = executor.submit(train_model)
+    accuracy = future.result()
+
+end = time.time()
+
+print("Model Accuracy:", accuracy)
+
+print("Execution Time:", end - start)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+____________________________________________________________________________________________________
+
+
+import tensorflow as tf
+
+# Load dataset
+mnist = tf.keras.datasets.mnist
+
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+# Normalize data
+x_train = x_train / 255.0
+x_test = x_test / 255.0
+
+# Build model
+model = tf.keras.models.Sequential([
+
+    tf.keras.layers.Flatten(input_shape=(28,28)),
+
+    tf.keras.layers.Dense(128, activation='relu'),
+
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+# Compile model
+model.compile(
+    optimizer='adam',
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+# Train model
+model.fit(x_train, y_train, epochs=5)
+
+# Test model
+loss, accuracy = model.evaluate(x_test, y_test)
+
+print("Accuracy:", accuracy)               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

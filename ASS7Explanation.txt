@@ -1,0 +1,61 @@
+# ================== EXPLANATION OF CODE ==================
+
+# 1. Import Libraries
+# tensorflow → used to build deep learning models
+# imdb → dataset of movie reviews
+# Sequential → allows us to build model layer by layer
+# Dense → fully connected neural network layer
+# Flatten → converts multi-dimensional data into 1D
+# pad_sequences → makes all input sequences same length
+
+# 2. Load Dataset
+# imdb.load_data(num_words=10000)
+# Loads top 10,000 most frequent words
+# Data is already converted into numbers (word indexes)
+# X_train, X_test → input data (reviews)
+# y_train, y_test → output labels (0 = negative, 1 = positive)
+
+# 3. Padding
+# Reviews have different lengths, so we make all equal length (200 words)
+# Short reviews → add zeros
+# Long reviews → cut to 200 words
+# This is required for neural network input
+
+# 4. Build Model
+# Sequential model → layers added one after another
+
+# Flatten Layer:
+# Converts input (200 words) into single vector
+# Example: [1,2,3,...] → same but in flat structure
+
+# Dense Layer (128 neurons):
+# Applies learning using ReLU activation
+# ReLU = removes negative values and keeps positive ones
+
+# Output Layer (1 neuron):
+# Uses sigmoid activation
+# Output will be between 0 and 1 (probability)
+# Close to 0 → Negative review
+# Close to 1 → Positive review
+
+# 5. Compile Model
+# optimizer='adam' → adjusts weights automatically
+# loss='binary_crossentropy' → used for binary classification
+# metrics=['accuracy'] → measures performance
+
+# 6. Train Model
+# model.fit()
+# Trains model using training data
+# epochs=5 → runs 5 times over data
+# batch_size=64 → processes 64 samples at once
+
+# 7. Evaluate Model
+# model.evaluate()
+# Tests model on unseen data (test set)
+# Gives loss and accuracy
+
+# 8. Output
+# Prints final accuracy
+# Usually around 80–85%
+
+# ================== END ==================
